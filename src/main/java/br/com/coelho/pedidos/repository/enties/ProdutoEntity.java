@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 import com.sun.istack.NotNull;
 
-@Entity(name = "Produto")
+@Entity(name = "produto")
 public class ProdutoEntity {
 
 	@Id
