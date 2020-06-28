@@ -8,8 +8,8 @@ import javax.persistence.Id;
 
 import com.sun.istack.NotNull;
 
-@Entity(name = "vendedores")
-public class VendedoresEntity {
+@Entity(name = "vendedor")
+public class VendedorEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
