@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity(name = "cliente")
-public class CleinteEntity {
+public class ClienteEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
