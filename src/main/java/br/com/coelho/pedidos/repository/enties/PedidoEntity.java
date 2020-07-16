@@ -1,13 +1,15 @@
 package br.com.coelho.pedidos.repository.enties;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity(name = "pedido")
 public class PedidoEntity {
@@ -16,26 +18,21 @@ public class PedidoEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idPedido;
 
-	@NotNull(message = "{Codigo cliente não pode ser nulo}")
-	private Long codCliente;
-	@NotNull(message = "{Registro federal não pode ser nulo}")
-	private String registroFederal;
-	private String nomeCliente;
-	private String razaoSocial;
-	@NotNull(message = "{Codigo não pode ser nulo}")
-	@Min(value = 1, message = "o numero não pode ser menor que um")
-	@Max(value = 999, message = "o numero não pode ser maior que 999")
-	private Long codVendedor;
-	@NotNull(message = "{Nome não pode ser nulo}")
-	@Size(min = 5, max = 50, message = "{O nome deve ter no min 5 caracteres e no max 50}")
-	private String nomeVendedor;
-	@NotNull(message = "{valor não pode ser nulo}")
-	@Min(value = 1, message = "{Valor minimo é 1}")
-	@Max(value = 999, message = "{Valor maximo é 999}")
-	private Long codFormaPgto;
-	@NotNull(message = "{valor não pode ser nulo}")
-	@Size(min = 4, max = 30, message = "{O campo descrição de pagamento deve ter no minimo 4 e no maximo 30 caracteres}")
-	private String descricaoFormaPgto;
+	@ManyToOne
+	private ClienteEntity cliente;
+
+	@ManyToOne
+	private VendedorEntity vendedor;
+
+	@ManyToOne
+	private FormaPagamentoEntity formaPgto;
+
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+	private List<PedidoItensEntity> pedidoItens;
+
+	public PedidoEntity() {
+		pedidoItens = new ArrayList<PedidoItensEntity>();
+	}
 
 	public Long getIdPedido() {
 		return idPedido;
@@ -45,68 +42,35 @@ public class PedidoEntity {
 		this.idPedido = idPedido;
 	}
 
-	public Long getCodCliente() {
-		return codCliente;
+	public ClienteEntity getCliente() {
+		return cliente;
 	}
 
-	public void setCodCliente(Long codCliente) {
-		this.codCliente = codCliente;
+	public void setCliente(ClienteEntity cliente) {
+		this.cliente = cliente;
 	}
 
-	public String getRegistroFederal() {
-		return registroFederal;
+	public VendedorEntity getVendedor() {
+		return vendedor;
 	}
 
-	public void setRegistroFederal(String registroFederal) {
-		this.registroFederal = registroFederal;
+	public void setVendedor(VendedorEntity vendedor) {
+		this.vendedor = vendedor;
 	}
 
-	public String getNomeCliente() {
-		return nomeCliente;
+	public FormaPagamentoEntity getFormaPgto() {
+		return formaPgto;
 	}
 
-	public void setNomeCliente(String nomeCliente) {
-		this.nomeCliente = nomeCliente;
+	public void setFormaPgto(FormaPagamentoEntity formaPgto) {
+		this.formaPgto = formaPgto;
 	}
 
-	public String getRazaoSocial() {
-		return razaoSocial;
+	public List<PedidoItensEntity> getPedidoItens() {
+		return pedidoItens;
 	}
 
-	public void setRazaoSocial(String razaoSocial) {
-		this.razaoSocial = razaoSocial;
+	public void setPedidoItens(List<PedidoItensEntity> pedidoItens) {
+		this.pedidoItens = pedidoItens;
 	}
-
-	public Long getCodVendedor() {
-		return codVendedor;
-	}
-
-	public void setCodVendedor(Long codVendedor) {
-		this.codVendedor = codVendedor;
-	}
-
-	public String getNomeVendedor() {
-		return nomeVendedor;
-	}
-
-	public void setNomeVendedor(String nomeVendedor) {
-		this.nomeVendedor = nomeVendedor;
-	}
-
-	public Long getCodFormaPgto() {
-		return codFormaPgto;
-	}
-
-	public void setCodFormaPgto(Long codFormaPgto) {
-		this.codFormaPgto = codFormaPgto;
-	}
-
-	public String getDescricaoFormaPgto() {
-		return descricaoFormaPgto;
-	}
-
-	public void setDescricaoFormaPgto(String descricaoFormaPgto) {
-		this.descricaoFormaPgto = descricaoFormaPgto;
-	}
-
 }

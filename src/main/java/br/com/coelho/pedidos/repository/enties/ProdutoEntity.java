@@ -1,10 +1,12 @@
 package br.com.coelho.pedidos.repository.enties;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -49,11 +51,13 @@ public class ProdutoEntity {
 	private Float custo;
 	@NotNull
 	private Float preco;
-	private Long estoque;
 	private Float altura;
 	private Float largura;
 	private Float comprimento;
 	private Float peso;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private EstoqueEntity estoque;
 
 	public Long getIdProduto() {
 		return idProduto;
@@ -167,11 +171,11 @@ public class ProdutoEntity {
 		this.preco = preco;
 	}
 
-	public Long getEstoque() {
+	public EstoqueEntity getEstoque() {
 		return estoque;
 	}
 
-	public void setEstoque(Long estoque) {
+	public void setEstoque(EstoqueEntity estoque) {
 		this.estoque = estoque;
 	}
 

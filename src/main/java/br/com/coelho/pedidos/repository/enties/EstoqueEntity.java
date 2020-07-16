@@ -12,8 +12,8 @@ public class EstoqueEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idEstoque;
+
 	@Column(unique = true)
-	private Long codProduto;
 	private Long qtdEstoque;
 	private Long qtdVendida;
 	private Long qtdSaldo;
@@ -24,14 +24,6 @@ public class EstoqueEntity {
 
 	public void setIdEstoque(Long idEstoque) {
 		this.idEstoque = idEstoque;
-	}
-
-	public Long getCodProduto() {
-		return codProduto;
-	}
-
-	public void setCodProduto(Long codProduto) {
-		this.codProduto = codProduto;
 	}
 
 	public Long getQtdEstoque() {
