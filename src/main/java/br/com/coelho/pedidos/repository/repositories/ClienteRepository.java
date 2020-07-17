@@ -9,5 +9,6 @@ import br.com.coelho.pedidos.repository.enties.ClienteEntity;
 public interface ClienteRepository extends JpaRepository<ClienteEntity, Long> {
 
 	Optional<ClienteEntity> findByCodCliente(Long codigo);
+	Optional<ClienteEntity> findByRegistroFederal(String registroFederal);
 
 }
