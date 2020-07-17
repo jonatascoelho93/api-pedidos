@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,6 +51,25 @@ public class EstoqueController {
 			return new ResponseEntity<>(estoqueOpt.get(), HttpStatus.OK);
 		} catch (Exception e) {
 			logger.error("Erro em buscar estoque com id %d erro: %s", id, e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<?> alterarEstoque(@PathVariable(name = "id") Long id,
+			@RequestBody EstoqueEntity estoqueEntity) {
+		try {
+			logger.info("Acessando funcionalidade de alterar estoque");
+			Optional<EstoqueEntity> estoqueOpt = estoque.findById(id);
+			if (!estoqueOpt.isPresent()) {
+				logger.info("Estoque com id %d não cadastrado", id);
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			estoqueEntity.setIdEstoque(id);
+			return new ResponseEntity<>(estoque.save(estoqueEntity), HttpStatus.OK);
+
+		} catch (Exception e) {
+			logger.error("Erro em alterar estoque com id %d erro: %s", id, e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
